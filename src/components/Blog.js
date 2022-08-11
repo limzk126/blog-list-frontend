@@ -37,10 +37,10 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
 
   return (
     <div style={blogStyle}>
-      <div style={hideWhenView}>
+      <div style={hideWhenView} className="beforeView">
         {blog.title} {blog.author} <button onClick={toggleView}>view</button>
       </div>
-      <div style={showWhenView}>
+      <div style={showWhenView} className="afterView">
         <div>
           {blog.title} <button onClick={toggleView}>hide</button>
         </div>
