@@ -17,6 +17,11 @@ const App = () => {
     if (user !== null) {
       const initializeBlogs = async () => {
         const allBlogs = await blogService.getAll();
+        allBlogs.sort((a, b) => {
+          if (a.likes > b.likes) return -1;
+          if (a.likes < b.likes) return 1;
+          return 0;
+        });
         setBlogs(allBlogs);
       };
       initializeBlogs();
@@ -103,6 +108,13 @@ const App = () => {
     await blogService.update(id, { likes });
   };
 
+  const deleteBlog = async (toDelete) => {
+    if (window.confirm(`Remove blog ${toDelete.title} by ${toDelete.author}`)) {
+      await blogService.remove(toDelete.id);
+      setBlogs(blogs.filter((blog) => blog.id !== toDelete.id));
+    }
+  };
+
   const blogList = () => {
     return (
       <div>
@@ -115,7 +127,12 @@ const App = () => {
         </Togglable>
         <div>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} updateLikes={updateLikes} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateLikes={updateLikes}
+              removeBlog={deleteBlog}
+            />
           ))}
         </div>
       </div>
