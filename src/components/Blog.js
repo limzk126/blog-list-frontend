@@ -4,10 +4,6 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
   const [isView, setIsView] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
 
-  useEffect(() => {
-    updateLikes(blog.id, likes);
-  }, [likes]);
-
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -28,6 +24,7 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
   };
 
   const incrementLike = () => {
+    updateLikes(blog.id, likes + 1);
     setLikes(likes + 1);
   };
 
