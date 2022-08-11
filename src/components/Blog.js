@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateLikes}) => {
   const [isView, setIsView] = useState(false);
+  const [likes, setLikes] = useState(blog.likes);
+
+  useEffect(() => {
+    updateLikes(blog.id, likes)
+  }, [likes])
 
   const blogStyle = {
     paddingTop: 10,
@@ -17,6 +22,10 @@ const Blog = ({ blog }) => {
   const toggleView = () => {
     setIsView(!isView);
   };
+  
+  const incrementLike = () => {
+    setLikes(likes + 1);
+  }
 
   return (
     <div style={blogStyle}>
@@ -28,7 +37,9 @@ const Blog = ({ blog }) => {
           {blog.title} <button onClick={toggleView}>hide</button>
         </div>
         <div>{blog.url}</div>
-        <div>likes {blog.likes} <button>like</button></div>
+        <div>
+          likes {likes} <button onClick={incrementLike}>like</button>
+        </div>
         <div>{blog.author}</div>
       </div>
     </div>

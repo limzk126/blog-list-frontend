@@ -15,7 +15,11 @@ const App = () => {
 
   useEffect(() => {
     if (user !== null) {
-      blogService.getAll().then((blogs) => setBlogs(blogs));
+      const initializeBlogs = async () => {
+        const allBlogs = await blogService.getAll();
+        setBlogs(allBlogs);
+      };
+      initializeBlogs();
     }
   }, [user]);
 
@@ -95,6 +99,10 @@ const App = () => {
     blogFormRef.current.toggleVisibility();
   };
 
+  const updateLikes = async (id, likes) => {
+    await blogService.update(id, { likes });
+  };
+
   const blogList = () => {
     return (
       <div>
@@ -107,7 +115,7 @@ const App = () => {
         </Togglable>
         <div>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} updateLikes={updateLikes} />
           ))}
         </div>
       </div>
