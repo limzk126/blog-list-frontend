@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
+import Togglable from './components/Togglable';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -86,6 +87,12 @@ const App = () => {
     window.localStorage.removeItem('user');
     setUser(null);
   };
+
+  const addBlog = async (newBlog) => {
+    const blog = await blogService.create(newBlog);
+    setBlogs(blogs.concat(blog));
+  };
+
   const blogList = () => {
     return (
       <div>
@@ -93,7 +100,9 @@ const App = () => {
         <div>
           {user.username} logged in <button onClick={onLogout}>logout</button>
         </div>
-        <BlogForm user={user} />
+        <Togglable buttonLabel="new note">
+          <BlogForm user={user} createBlog={addBlog} />
+        </Togglable>
         <div>
           {blogs.map((blog) => (
             <Blog key={blog.id} blog={blog} />

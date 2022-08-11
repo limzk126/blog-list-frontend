@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import blogService from '../services/blogs';
 import Notification from './Notification';
 
-const BlogForm = ({ user }) => {
+const BlogForm = ({ user, createBlog }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -16,7 +15,7 @@ const BlogForm = ({ user }) => {
       url,
       user: user.id,
     };
-    await blogService.create(newBlog);
+    createBlog(newBlog);
     setTitle('');
     setAuthor('');
     setUrl('');
@@ -31,6 +30,7 @@ const BlogForm = ({ user }) => {
 
   return (
     <form onSubmit={createHandler}>
+      <h2>create new</h2>
       <Notification message={message.text} isWarning={message.isWarning} />
       <div>
         title:{' '}
