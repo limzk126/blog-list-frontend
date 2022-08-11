@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
-import Notification from './components/Notification';
 import Togglable from './components/Togglable';
+import LoginForm from './components/LoginForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -65,30 +65,14 @@ const App = () => {
 
   const loginForm = () => {
     return (
-      <div>
-        <form onSubmit={handleLogin}>
-          <Notification message={message.text} isWarning={message.isWarning} />
-          <div>
-            Username{' '}
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            Password{' '}
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
-      </div>
+      <LoginForm
+        handleSubmit={handleLogin}
+        handlePasswordChange={setPassword}
+        handleUsernameChange={setUsername}
+        password={password}
+        username={username}
+        message={message}
+      />
     );
   };
 
