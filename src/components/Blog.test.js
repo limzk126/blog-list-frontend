@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Blog from './Blog';
 
 describe('<Blog />', () => {
@@ -33,5 +34,16 @@ describe('<Blog />', () => {
 
     expect(beforeView).not.toHaveStyle('display: none');
     expect(afterView).toHaveStyle('display: none');
+  });
+
+  test('url and likes are additionally displayed after clicking view button', async () => {
+    const button = screen.getByText('view');
+    const user = userEvent.setup();
+    await user.click(button);
+    const beforeView = container.querySelector('.beforeView');
+    const afterView = container.querySelector('.afterView');
+
+    expect(beforeView).toHaveStyle('display: none');
+    expect(afterView).not.toHaveStyle('display: none');
   });
 });
