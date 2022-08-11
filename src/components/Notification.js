@@ -1,5 +1,4 @@
 const Notification = ({ message, isWarning }) => {
-  console.log('asdasdsd', message);
   if (!message) return;
   const NotificationStyle = {
     color: isWarning ? 'red' : 'green',
