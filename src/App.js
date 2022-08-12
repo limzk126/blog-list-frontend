@@ -5,6 +5,7 @@ import Togglable from './components/Togglable';
 import LoginForm from './components/LoginForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
+import Notification from './components/Notification';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -86,6 +87,13 @@ const App = () => {
     const blog = await blogService.create(newBlog);
     setBlogs(blogs.concat(blog));
     blogFormRef.current.toggleVisibility();
+    setMessage({
+      text: `a new blog ${newBlog.title} by ${newBlog.author} added`,
+      isWarning: false,
+    });
+    setTimeout(() => {
+      setMessage({});
+    }, 4000);
   };
 
   const updateLikes = async (id, likes) => {
@@ -106,10 +114,11 @@ const App = () => {
         <div>
           {user.username} logged in <button onClick={onLogout}>logout</button>
         </div>
+        <Notification message={message.text} isWarning={message.isWarning} />
         <Togglable buttonLabel="new note" ref={blogFormRef}>
           <BlogForm user={user} createBlog={addBlog} />
         </Togglable>
-        <div>
+        <div id="blog-list">
           {blogs.map((blog) => (
             <Blog
               key={blog.id}

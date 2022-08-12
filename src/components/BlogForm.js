@@ -5,7 +5,6 @@ const BlogForm = ({ user, createBlog }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
-  const [message, setMessage] = useState({});
 
   const createHandler = async (event) => {
     event.preventDefault();
@@ -19,19 +18,11 @@ const BlogForm = ({ user, createBlog }) => {
     setTitle('');
     setAuthor('');
     setUrl('');
-    setMessage({
-      text: `a new blog ${newBlog.title} by ${newBlog.author} added`,
-      isWarning: false,
-    });
-    setTimeout(() => {
-      setMessage({});
-    }, 4000);
   };
 
   return (
     <form onSubmit={createHandler}>
       <h2>create new</h2>
-      <Notification message={message.text} isWarning={message.isWarning} />
       <div>
         title:{' '}
         <input
@@ -62,7 +53,9 @@ const BlogForm = ({ user, createBlog }) => {
           id="blogUrl"
         />
       </div>
-      <button type="submit">create</button>
+      <button type="submit" id="create-button">
+        create
+      </button>
     </form>
   );
 };

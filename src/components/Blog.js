@@ -33,7 +33,7 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
   };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <div style={hideWhenView} className="beforeView">
         {blog.title} {blog.author} <button onClick={toggleView}>view</button>
       </div>
@@ -43,7 +43,10 @@ const Blog = ({ blog, updateLikes, removeBlog }) => {
         </div>
         <div>{blog.url}</div>
         <div>
-          likes {likes} <button onClick={incrementLike}>like</button>
+          likes {likes}{' '}
+          <button onClick={incrementLike} id="like-button">
+            like
+          </button>
         </div>
         <div>{blog.author}</div>
       </div>
